@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "express": "^5.1.0",
+    "mongoose": "^8.15.1"
+  },
+  "name": "inotebook-backend",
+  "description": "a note taking app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AbeerZahid917/Backend_React_JS_Nayatel_Internship.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AbeerZahid917/Backend_React_JS_Nayatel_Internship/issues"
+  },
+  "homepage": "https://github.com/AbeerZahid917/Backend_React_JS_Nayatel_Internship#readme"
+}
