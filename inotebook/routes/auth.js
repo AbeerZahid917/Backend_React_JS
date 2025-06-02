@@ -3,6 +3,9 @@ const router = express.Router();
 const User = require('../models/User');
 const {body, validationResult} = require('express-validator');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+const JWT_SECRET = 'Yukiisagreatcoder'; // personal signature on web token that should ideally be hidden so put it in an env.local file or smth
 
 //create a user using: POST "/api/auth/createuser". doesnt require authorization
 
@@ -32,16 +35,25 @@ router.post('/createuser', [ // this is an array part of the arguments
                 return res.status(400).json({error: "Sorry, a user with this email already exists"})
             }
 
-            const salt = bcrypt.genSalt(10);
-            const sec_pass = bcrypt.hash(req.body.password, salt);
+            const salt = await bcrypt.genSalt(10);
+            const sec_pass = await bcrypt.hash(req.body.password, salt);
 
             // creates a new user
             user = await User.create ({
                 name: req.body.name,
                 password: sec_pass,
                 email: req.body.email
-            })
-            res.json({"res": "response"})
+            });
+
+            const data = {
+                user: {
+                    id: user.id
+                }
+            }
+            const auth_token = jwt.sign(data, JWT_SECRET);
+
+            // res.json({user})
+            res.json({auth_token})
         }
         catch (error)
         {
