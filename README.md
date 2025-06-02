@@ -11,3 +11,10 @@
 * need to make schemas for the modules folder
 * for the routes folder:
     * a bunch of scattered stuff in the code
+
+## Video 46
+* a bunch of stuff for input validation
+
+## Video 49 - Hacking prevention for passwords
+* adding salt (extra letters) to the password so that it cant be hacked
+* code to prevent hacking
