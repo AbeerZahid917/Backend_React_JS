@@ -18,3 +18,6 @@
 ## Video 49 - Hacking prevention for passwords
 * adding salt (extra letters) to the password so that it cant be hacked
 * code to prevent hacking
+
+## Video 55 - Starting the frontend
+* npm i react-router-dom concurrently
