@@ -20,4 +20,16 @@
 * code to prevent hacking
 
 ## Video 55 - Starting the frontend
-* npm i react-router-dom concurrently
+* npm i react-router-dom concurrently to make it so that both the front end can work simultaneously plus a bunch of things in this vid
+* also make sure that the overarching file is also a create-react-app cuz otherwise it wont have the public and src etc
+* ### do not move the public and src from the backend file and call it a day, make a separate app and then move the backend into it
+
+## Video 56
+* once upon a time there was a thing where we studied state etc in mern, now we've finally gotten to context
+* so use context is basically used to change the state at a place where its hard to change state like at the end of one of the khane of a hash table
+* you can make it for different things like color, auth token etc
+
+## Video 58 - understanding how its gonna work with a pretty cool example
+* maing states, basically make another folder in src and call it context and that is where the state and context files will go
+* over there, there will be a state and context file, the context file is kinda bland but the state file has the state that basicallt controls the state wherever in the code its imported
+* also just import it and then set the value from the file to a variable and you can use it anywhere
