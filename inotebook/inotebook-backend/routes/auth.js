@@ -23,11 +23,12 @@ router.post('/createuser', [ // this is an array part of the arguments
     {   
         // req = request
         // res = response
+        let success = false;
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) // checking if the input is correct according to the checks given in the array
         {
-            return res.status(400).json({errors: errors.array()});
+            return res.status(400).json({success, errors: errors.array()});
         }
 
         try
@@ -36,7 +37,7 @@ router.post('/createuser', [ // this is an array part of the arguments
             let user = await User.findOne({email: req.body.email});
             if (user)
             {
-                return res.status(400).json({error: "Sorry, a user with this email already exists"})
+                return res.status(400).json({success, error: "Sorry, a user with this email already exists"})
             }
 
             const salt = await bcrypt.genSalt(10);
@@ -55,7 +56,8 @@ router.post('/createuser', [ // this is an array part of the arguments
                 }
             }
             const auth_token = jwt.sign(data, JWT_SECRET);
-            res.json({auth_token})
+            success = true;
+            res.json({success, auth_token})
         }
         catch (error)
         {
@@ -78,6 +80,7 @@ router.post('/login', [ // this is an array part of the arguments
         const errors = validationResult(req);
         if (!errors.isEmpty()) // checking if the input is correct according to the checks given in the array
         {
+            let success = false;
             return res.status(400).json({errors: errors.array()});
         }
         
@@ -87,12 +90,14 @@ router.post('/login', [ // this is an array part of the arguments
             let user = await User.findOne({email});
             if (!user)
             {
+                success = false;
                 return res.status(400).json({error: "Please login with correct credentials"});
             }
 
             const password_compare = await bcrypt.compare(password, user.password);
             if (!password_compare)
             {
+                success = false;
                 return res.status(400).json({error: "Please login with correct credentials"});
             }
 
@@ -102,7 +107,8 @@ router.post('/login', [ // this is an array part of the arguments
                 }
             }
             const auth_token = jwt.sign(payload, JWT_SECRET);
-            res.json({auth_token});
+            success = true;
+            res.json({success, auth_token});
 
         }
         catch (error)

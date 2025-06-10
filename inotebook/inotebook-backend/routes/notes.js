@@ -7,7 +7,7 @@ const {body, validationResult} = require('express-validator');
 
 
 
-// ROUTE 1: get all the notes using: GET "/api/auth/", login required
+// ROUTE 1: get all the notes using: GET "/api/notes/", login required
 router.get('/fetchallnotes', getuser, async (req, res)=>
 {
     try
@@ -26,7 +26,7 @@ router.get('/fetchallnotes', getuser, async (req, res)=>
 
 
 
-// ROUTE 2: add a new note using: POST "/api/auth/addnote", login required
+// ROUTE 2: add a new note using: POST "/api/notes/addnote", login required
 router.post('/addnote', getuser, [
 
     body('title', 'Enter a valid title').isLength({min: 3}), 
@@ -55,6 +55,74 @@ router.post('/addnote', getuser, [
         return res.status(500).send("Internal server Error");
     }
 
+})
+
+
+
+
+
+
+
+// ROUTE 3: update an existing note using: PUT "/api/notes/updatenote/:id"
+router.put('/updatenote/:id', getuser, async (req, res)=>
+{
+    const {title, description, tag} = req.body;
+
+    // create a new note object
+    const new_note = {};
+
+    if (title) {
+        new_note.title = title;
+    }
+    if (description) {
+        new_note.description = description;
+    }
+    if (tag) {
+        new_note.tag = tag;
+    }
+
+    // find the node to be updated and update it
+    let note = await Note.findById(req.params.id);
+
+    if (!note)
+    {
+        return res.status(404).send("not found");
+    }
+
+    if (note.user.toString() !== req.user.id)
+    {
+        return req.status(401).send("not allowed");
+    }
+
+    note = await Note.findByIdAndUpdate(req.params.id, {$set: new_note}, {new: true});
+    res.json({note});
+})
+
+
+
+
+
+
+
+// ROUTE 4: delete an existing note using: PUT "/api/notes/deletenote/:id"
+router.put('/deletenote/:id', getuser, async (req, res)=>
+{
+    // find the node to be deleted and delete it
+    let note = await Note.findById(req.params.id);
+
+    if (!note)
+    {
+        return res.status(404).send("not found");
+    }
+
+    // Allow deletion only if user owns this note
+    if (note.user.toString() !== req.user.id)
+    {
+        return res.status(401).send("not allowed");
+    }
+
+    note = await Note.findByIdAndDelete(req.params.id);
+    res.json({"successs": "note has been deleted"});
 })
 
 
