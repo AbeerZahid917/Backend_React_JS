@@ -33,3 +33,11 @@
 * maing states, basically make another folder in src and call it context and that is where the state and context files will go
 * over there, there will be a state and context file, the context file is kinda bland but the state file has the state that basicallt controls the state wherever in the code its imported
 * also just import it and then set the value from the file to a variable and you can use it anywhere
+
+## Video 61 - Font Awesome
+* Font awesome is a website that can be used to make icons for stuff like a trash can for deleting etc
+* just search it and bring the code snippet from there and paste it where necessary, like the delete one went in noteitem at the end of the card
+* to turn the cursor into that hand thing, add at the end of index.css
+   i {
+     cursor: pointer;
+   }
